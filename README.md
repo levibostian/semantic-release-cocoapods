@@ -1,5 +1,5 @@
-[![Travis](https://img.shields.io/travis/levibostian/semantic-release-cocoapods.svg)](https://travis-ci.org/levibostian/semantic-release-cocoapods)
-[![npm latest version](https://img.shields.io/npm/v/levibostian/semantic-release-cocoapods/latest.svg)](https://www.npmjs.com/package/levibostian/semantic-release-cocoapods)
+[![Travis](https://travis-ci.com/levibostian/semantic-release-cocoapods.svg?branch=master)](https://travis-ci.org/levibostian/semantic-release-cocoapods)
+[![npm latest version](https://img.shields.io/npm/v/semantic-release-cocoapods/latest.svg)](https://www.npmjs.com/package/semantic-release-cocoapods)
 
 # semantic-release-cocoapods
 
