@@ -20,11 +20,11 @@ async function verifyConditions(pluginConfig, context) {
 
   try {
     // 1. Verify `pod` command exists
-    await verifyCliInstalled(pluginConfig);
+    await verifyCliInstalled(pluginConfig, context);
 
     // 2. Verify `COCOAPODS_TRUNK_TOKEN` environment variable exists
     // 3. Verify `pod trunk me` is successful.
-    await verifyPodAuth(context);
+    await verifyPodAuth(pluginConfig, context);
 
     // 4. Verify `pod lib lint` is successful
     await verifyPodLint(pluginConfig, context);
