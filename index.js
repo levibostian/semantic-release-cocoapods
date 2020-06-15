@@ -49,9 +49,7 @@ async function publish(pluginConfig, context) {
     await preparePod(pluginConfig, context);
   }
 
-  await publishPod(pluginConfig, context);
-
-  return true;
+  return publishPod(pluginConfig, context);
 }
 
 module.exports = {verifyConditions, prepare, publish};
