@@ -1,0 +1,25 @@
+name: Deploy plugin
+
+on:
+  push:
+    branches: [main, beta, alpha]
+
+jobs:
+  deploy-git-tag-and-push-npm: 
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to create git tag 
+    steps: 
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version-file: '.nvmrc'
+    - run: npm ci
+
+    - name: Deploy git tag via semantic-release
+      uses: cycjimmy/semantic-release-action@v4
+      with:
+        semantic_version: latest # since our plugin has a devDependency on semantic-release, using latest keyword here will upgrade node_modules/ copy to the latest version for deployment
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_PUSH_TOKEN }}

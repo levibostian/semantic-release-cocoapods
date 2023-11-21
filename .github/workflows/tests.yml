@@ -1,0 +1,41 @@
+name: Run tests 
+
+on: [pull_request]
+
+jobs:
+  run-tests: 
+    runs-on: ubuntu-latest
+    steps: 
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version-file: '.nvmrc'
+    - run: npm ci    
+    - run: npm run test
+  
+  run-plugin-in-semantic-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to set permissions for semantic-release dry-run to pass 
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version-file: '.nvmrc'
+    - run: npm ci
+
+    - name: install self to run it in semantic-release
+      run: |
+        npm pack 
+        npm install --no-save semantic-release-cocoapods-0.0.0.tgz
+
+    - name: setup git user to run semantic-release
+      run: |
+        git config --global user.email "user@example.com"
+        git config --global user.name "Example User"
+
+    - name: Run semantic-release in dry run
+      run: unset GITHUB_ACTIONS && npx semantic-release --dry-run --no-ci --branches ${REF_NAME} --plugins "semantic-release-cocoapods"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REF_NAME: ${{ github.ref_name }}

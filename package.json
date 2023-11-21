@@ -1,7 +1,7 @@
 {
   "name": "semantic-release-cocoapods",
   "description": "Cocoapods publishing plugin for semantic-release ",
-  "version": "0.0.0-development",
+  "version": "0.0.0",
   "author": "Levi Bostian (https://github.com/levibostian/)",
   "type": "module",
   "ava": {
