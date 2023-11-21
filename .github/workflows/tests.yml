@@ -15,7 +15,7 @@ jobs:
   
   run-plugin-in-semantic-release:
     if: github.event_name == 'push' # semantic-release only seems to work when running on push, not on pull_request because of temp branch made during PRs. 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest # because cocoapods is already installed on these machines
     permissions:
       contents: write # to set permissions for semantic-release dry-run to pass 
     steps:
@@ -34,8 +34,12 @@ jobs:
       run: |
         git config --global user.email "user@example.com"
         git config --global user.name "Example User"
+    
+    - name: Create config file used just for testing
+      run: cp .releaserc.testing.json .releaserc.json
 
     - name: Run semantic-release in dry run
-      run: unset GITHUB_ACTIONS && npx semantic-release --dry-run --no-ci --branches "${{ github.ref_name }},main" --plugins "semantic-release-cocoapods"
+      run: unset GITHUB_ACTIONS && npx semantic-release --dry-run --no-ci --branches "${{ github.ref_name }},main"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
