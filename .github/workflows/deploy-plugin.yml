@@ -20,6 +20,7 @@ jobs:
       uses: cycjimmy/semantic-release-action@v4
       with:
         semantic_version: latest # since our plugin has a devDependency on semantic-release, using latest keyword here will upgrade node_modules/ copy to the latest version for deployment
+        branch: ${{ github.ref_name }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_PUSH_TOKEN }}
