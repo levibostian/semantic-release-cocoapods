@@ -1,4 +1,4 @@
-import {defaultTo} from 'lodash';
+import {defaultTo} from 'lodash-es';
 import AggregateError from 'aggregate-error';
 import verifyPluginConfig from './lib/verify-config.js';
 import verifyPodAuth from './lib/verify-auth.js';
@@ -10,7 +10,7 @@ import publishPod from './lib/publish.js';
 // Let verified;
 let prepared;
 
-async function verifyConditions(pluginConfig, context) {
+export async function verifyConditions(pluginConfig, context) {
   // Set default values for config
   pluginConfig.podLint = defaultTo(pluginConfig.podLint, true);
   pluginConfig.podLintArgs = defaultTo(pluginConfig.podLintArgs, '');
@@ -39,17 +39,15 @@ async function verifyConditions(pluginConfig, context) {
   //  Verified = true;
 }
 
-async function prepare(pluginConfig, context) {
+export async function prepare(pluginConfig, context) {
   await preparePod(pluginConfig, context);
   prepared = true;
 }
 
-async function publish(pluginConfig, context) {
+export async function publish(pluginConfig, context) {
   if (!prepared) {
     await preparePod(pluginConfig, context);
   }
 
   return publishPod(pluginConfig, context);
 }
-
-module.exports = {verifyConditions, prepare, publish};
