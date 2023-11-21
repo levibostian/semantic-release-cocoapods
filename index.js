@@ -16,7 +16,8 @@ export async function verifyConditions(pluginConfig, context) {
   pluginConfig.podLintArgs = defaultTo(pluginConfig.podLintArgs, '');
   pluginConfig.podPushArgs = defaultTo(pluginConfig.podPushArgs, '');
 
-  const errors = verifyPluginConfig(pluginConfig);
+  const errors = []
+  errors.push(...await verifyPluginConfig(pluginConfig, context));    
 
   try {
     // 1. Verify `pod` command exists
@@ -29,7 +30,7 @@ export async function verifyConditions(pluginConfig, context) {
     // 4. Verify `pod lib lint` is successful
     await verifyPodLint(pluginConfig, context);
   } catch (error) {
-    errors.push(...error);
+    errors.push(error);
   }
 
   if (errors.length > 0) {

@@ -35,7 +35,7 @@ jobs:
         git config --global user.name "Example User"
 
     - name: Run semantic-release in dry run
-      run: unset GITHUB_ACTIONS && npx semantic-release --dry-run --no-ci --branches ${REF_NAME} --plugins "semantic-release-cocoapods"
+      run: unset GITHUB_ACTIONS && npx semantic-release --dry-run --no-ci --branches "${REF_NAME},main" --plugins "semantic-release-cocoapods"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         REF_NAME: ${{ github.ref_name }}
