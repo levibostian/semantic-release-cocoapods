@@ -1,10 +1,11 @@
-const path = require('path');
-const test = require('ava');
-const {outputFile, readFile} = require('fs-extra');
-const tempy = require('tempy');
-const {stub} = require('sinon');
-const {WritableStreamBuffer} = require('stream-buffers');
-const prepare = require('../lib/prepare');
+import path from 'path';
+import test from 'ava'
+import { readFileSync } from 'fs'
+import { readFile } from 'fs/promises'
+import { outputFile, outputFileSync } from 'fs-extra/esm'
+import {stub} from 'sinon';
+import {WritableStreamBuffer} from 'stream-buffers';
+import prepare from '../lib/prepare.js';
 
 test.beforeEach((t) => {
   t.context.log = stub();
@@ -14,7 +15,9 @@ test.beforeEach((t) => {
 });
 
 test('Update podspec', async (t) => {
-  const cwd = tempy.directory();
+  const {temporaryDirectory} = await import('tempy');
+
+  const cwd = temporaryDirectory();
   const packagePath = path.resolve(cwd, 'Test.podspec');
   await outputFile(packagePath, "s.version = '0.0.1'");
 
@@ -38,7 +41,9 @@ test('Update podspec', async (t) => {
 });
 
 test('Preserve indentation and newline', async (t) => {
-  const cwd = tempy.directory();
+  const {temporaryDirectory} = await import('tempy');
+
+  const cwd = temporaryDirectory();
   const packagePath = path.resolve(cwd, 'Test.podspec');
   await outputFile(
     packagePath,

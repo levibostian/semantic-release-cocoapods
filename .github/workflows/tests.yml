@@ -1,0 +1,45 @@
+name: Run tests 
+
+on: [pull_request, push]
+
+jobs:
+  run-tests:   
+    runs-on: ubuntu-latest
+    steps: 
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version-file: '.nvmrc'
+    - run: npm ci    
+    - run: npm run test
+  
+  run-plugin-in-semantic-release:
+    if: github.event_name == 'push' # semantic-release only seems to work when running on push, not on pull_request because of temp branch made during PRs. 
+    runs-on: macos-latest # because cocoapods is already installed on these machines
+    permissions:
+      contents: write # to set permissions for semantic-release dry-run to pass 
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version-file: '.nvmrc'
+    - run: npm ci
+
+    - name: install self to run it in semantic-release
+      run: |
+        npm pack 
+        npm install --no-save semantic-release-cocoapods-0.0.0.tgz
+
+    - name: setup git user to run semantic-release
+      run: |
+        git config --global user.email "user@example.com"
+        git config --global user.name "Example User"
+    
+    - name: Create config file used just for testing
+      run: cp .releaserc.testing.json .releaserc.json
+
+    - name: Run semantic-release in dry run
+      run: unset GITHUB_ACTIONS && npx semantic-release --dry-run --no-ci --branches "${{ github.ref_name }},main"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}

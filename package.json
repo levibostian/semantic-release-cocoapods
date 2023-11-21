@@ -1,8 +1,9 @@
 {
   "name": "semantic-release-cocoapods",
   "description": "Cocoapods publishing plugin for semantic-release ",
-  "version": "0.0.0-development",
+  "version": "0.0.0",
   "author": "Levi Bostian (https://github.com/levibostian/)",
+  "type": "module",
   "ava": {
     "files": [
       "test/**/*.test.js"
@@ -13,21 +14,16 @@
     "url": "https://github.com/levibostian/semantic-release-cocoapods/issues"
   },
   "dependencies": {
-    "@semantic-release/error": "^2.2.0",
-    "aggregate-error": "^3.0.0",
-    "execa": "^4.0.0",
-    "lodash": "^4.17.15",
-    "replace-in-file": "^6.1.0"
+    "@semantic-release/error": "^4.0.0",
+    "aggregate-error": "^5.0.0",
+    "execa": "^8.0.1",
+    "lodash-es": "^4.17.15",
+    "replace-in-file": "^7.0.2"
   },
   "devDependencies": {
-    "ava": "^3.1.0",
-    "codecov": "^3.0.0",
-    "dockerode": "^3.0.0",
-    "nyc": "^15.0.0",
-    "semantic-release": "^17.0.0",
-    "sinon": "^9.0.0",
-    "stream-buffers": "^3.0.2",
-    "xo": "^0.29.0"
+    "ava": "^5.3.1",
+    "sinon": "^17.0.1",
+    "stream-buffers": "^3.0.2"
   },
   "files": [
     "lib",
@@ -43,24 +39,8 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "nyc": {
-    "include": [
-      "lib/**/*.js",
-      "index.js"
-    ],
-    "reporter": [
-      "json",
-      "text",
-      "html"
-    ],
-    "all": true
-  },
   "peerDependencies": {
-    "semantic-release": ">=16.0.0 <18.0.0"
-  },
-  "prettier": {
-    "printWidth": 120,
-    "trailingComma": "es5"
+    "semantic-release": ">=18.0.0"
   },
   "publishConfig": {
     "access": "public"
@@ -70,17 +50,6 @@
     "url": "https://github.com/levibostian/semantic-release-cocoapods.git"
   },
   "scripts": {
-    "codecov": "codecov -f coverage/coverage-final.json",
-    "lint": "xo",
-    "pretest": "npm run lint",
-    "semantic-release": "semantic-release",
-    "test": "nyc ava -v"
-  },
-  "xo": {
-    "prettier": true,
-    "space": true,
-    "rules": {
-      "unicorn/string-content": "off"
-    }
+    "test": "npx ava -v"
   }
 }
