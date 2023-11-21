@@ -1,11 +1,11 @@
-const {defaultTo} = require('lodash');
-const AggregateError = require('aggregate-error');
-const verifyPluginConfig = require('./lib/verify-config');
-const verifyPodAuth = require('./lib/verify-auth');
-const verifyCliInstalled = require('./lib/verify-cli-installed');
-const verifyPodLint = require('./lib/verify-pod-lint');
-const preparePod = require('./lib/prepare');
-const publishPod = require('./lib/publish');
+import {defaultTo} from 'lodash';
+import AggregateError from 'aggregate-error';
+import verifyPluginConfig from './lib/verify-config.js';
+import verifyPodAuth from './lib/verify-auth.js';
+import verifyCliInstalled from './lib/verify-cli-installed.js';
+import verifyPodLint from './lib/verify-pod-lint.js';
+import preparePod from './lib/prepare.js';
+import publishPod from './lib/publish.js';
 
 // Let verified;
 let prepared;
